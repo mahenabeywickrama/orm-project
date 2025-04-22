@@ -6,23 +6,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "payment")
+@Table(name = "payments")
 public class Payment {
     @Id
-    private String id;
-    private String date;
-    private BigDecimal amount;
+    private String paymentId;
+
+    private LocalDate paymentDate;
+    private double amount;
+    private String method;
 
     @ManyToOne
-    @JoinTable(name = "user_id")
-    private User user;
+    @JoinColumn(name = "processed_by")
+    private User processedBy;
 
-    @ManyToOne
-    @JoinTable(name = "patient_id")
-    private Payment payment;
+    @OneToOne(mappedBy = "payment")
+    private Enrollment enrollment;
 }

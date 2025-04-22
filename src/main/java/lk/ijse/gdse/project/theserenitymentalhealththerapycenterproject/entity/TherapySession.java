@@ -5,26 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "therapy_session")
+@Table(name = "therapy_sessions")
 public class TherapySession {
     @Id
-    private String id;
-    private String notes;
+    private String sessionId;
 
-    @Column(name = "date")
-    private Date date;
+    private LocalDate sessionDate;
 
     @ManyToOne
-    @JoinTable(name = "patient_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
-    @JoinTable(name = "therapist_id")
+    @JoinColumn(name = "therapist_id")
     private Therapist therapist;
+
+    @ManyToOne
+    @JoinColumn(name = "program_id")
+    private TherapyProgram program;
 }

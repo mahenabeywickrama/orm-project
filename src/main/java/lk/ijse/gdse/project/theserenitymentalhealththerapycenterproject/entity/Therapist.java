@@ -1,9 +1,6 @@
 package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +11,18 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "therapist")
+@Table(name = "therapists")
 public class Therapist {
     @Id
-    private String id;
+    private String therapistId;
+
     private String name;
     private String specialization;
-    private String contact;
+    private String contactNumber;
 
-    @OneToMany(mappedBy = "therapist")
+    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
     private List<TherapyProgram> programs;
 
-    @OneToMany(mappedBy = "therapist")
-    private List<TherapySession> therapySessions;
+    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
+    private List<TherapySession> sessions;
 }

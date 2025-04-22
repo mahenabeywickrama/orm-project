@@ -14,14 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
-    private String id;
+    private String userId;
+
     private String username;
     private String password;
     private String role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Payment> payments;
+    @OneToMany(mappedBy = "processedBy")
+    private List<Payment> processedPayments;
 }

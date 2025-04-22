@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,17 +13,26 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "enrollment")
+@Table(name = "enrollments")
 public class Enrollment {
     @Id
-    private String id;
-    private Date date;
+    private String enrollmentId;
+
+    private LocalDate enrollmentDate;
 
     @ManyToOne
-    @JoinTable(name = "patient_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne
-    @JoinTable(name = "therapy_program_id")
-    private TherapyProgram therapyProgram;
+    @ManyToMany
+    @JoinTable(
+            name = "enrollment_therapy_programs", // Join table name
+            joinColumns = @JoinColumn(name = "enrollment_id"),
+            inverseJoinColumns = @JoinColumn(name = "program_id")
+    )
+    private List<TherapyProgram> therapyPrograms;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", referencedColumnName = "paymentId")
+    private Payment payment;
 }

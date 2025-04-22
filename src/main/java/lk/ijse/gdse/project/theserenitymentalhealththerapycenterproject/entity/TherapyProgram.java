@@ -5,27 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "therapy_program")
+@Table(name = "therapy_programs")
 public class TherapyProgram {
     @Id
-    private String id;
-    private String name;
-    private BigDecimal fee;
+    private String programId;
 
-    @Column(name = "duration_(weeks)")
-    private int duration;
+    private String name;
+    private int durationInWeeks;
+    private double fee;
 
     @ManyToOne
-    @JoinTable(name = "therapist_id")
+    @JoinColumn(name = "therapist_id")
     private Therapist therapist;
 
-    @OneToMany(mappedBy = "therapy_program")
+    @ManyToMany(mappedBy = "therapyPrograms")
     private List<Enrollment> enrollments;
 }
