@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "payments")
-public class Payment {
+public class Payment implements SuperEntity {
     @Id
     private String paymentId;
 

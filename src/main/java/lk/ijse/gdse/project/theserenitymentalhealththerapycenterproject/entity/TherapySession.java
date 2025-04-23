@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "therapy_sessions")
-public class TherapySession {
+public class TherapySession implements SuperEntity {
     @Id
     private String sessionId;
 

@@ -14,8 +14,6 @@ module lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject {
     opens lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity to org.hibernate.orm.core;
 
 //    opens lk.ijse.gdse.project.ormproject.dto.tm to javafx.base;
-//    opens lk.ijse.gdse.project.ormproject.controller to javafx.fxml;
-
-    opens lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject to javafx.fxml;
+    opens lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller to javafx.fxml;
     exports lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject;
 }

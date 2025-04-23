@@ -33,11 +33,12 @@ public class FactoryConfiguration {
         sessionFactory = configuration.buildSessionFactory();
     }
 
-    public static FactoryConfiguration getInstance() throws IOException {
-        if (factoryConfiguration == null) {
-            factoryConfiguration = new FactoryConfiguration();
+    public static FactoryConfiguration getInstance() {
+        try {
+            return factoryConfiguration == null ? factoryConfiguration = new FactoryConfiguration() : factoryConfiguration;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return factoryConfiguration;
     }
 
     public Session getSession() {
