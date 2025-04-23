@@ -12,5 +12,4 @@ public interface TherapistBO extends SuperBO {
     String getNextTherapistId();
     List<TherapistDTO> getTherapists();
     TherapistDTO getTherapistById(String id);
-    void showErrorAlert(String message);
 }

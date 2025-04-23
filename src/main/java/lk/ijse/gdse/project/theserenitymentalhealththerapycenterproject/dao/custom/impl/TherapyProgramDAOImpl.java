@@ -39,7 +39,13 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(entity);
+            TherapyProgram therapyProgram = session.get(TherapyProgram.class, entity.getProgramId());
+            therapyProgram.setProgramId(entity.getProgramId());
+            therapyProgram.setName(entity.getName());
+            therapyProgram.setFee(entity.getFee());
+            therapyProgram.setTherapist(entity.getTherapist());
+
+            session.merge(therapyProgram);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -96,7 +102,7 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         Session session = factoryConfiguration.getSession();
 
         String lastId = session
-                .createQuery("SELECT p.id FROM TherapyProgram p ORDER BY p.id DESC", String.class)
+                .createQuery("SELECT p.programId FROM TherapyProgram p ORDER BY p.programId DESC", String.class)
                 .setMaxResults(1)
                 .uniqueResult();
         return Optional.ofNullable(lastId);

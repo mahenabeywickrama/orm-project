@@ -17,50 +17,37 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public boolean savePatient(PatientDTO dto) {
-        try {
-            Patient patient = new Patient(
-                    dto.getPatientId(),
-                    dto.getFullName(),
-                    dto.getEmail(),
-                    dto.getPhoneNumber(),
-                    dto.getMedicalHistory(),
-                    null,
-                    null);
+        Patient patient = new Patient(
+                dto.getPatientId(),
+                dto.getFullName(),
+                dto.getEmail(),
+                dto.getPhoneNumber(),
+                dto.getMedicalHistory(),
+                null,
+                null
+        );
 
-            return patientDAO.save(patient);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        return patientDAO.save(patient);
     }
 
     @Override
     public boolean updatePatient(PatientDTO dto) {
-        try {
-            Patient patient = new Patient(
-                    dto.getPatientId(),
-                    dto.getFullName(),
-                    dto.getEmail(),
-                    dto.getPhoneNumber(),
-                    dto.getMedicalHistory(),
-                    null,
-                    null
-            );
-            return patientDAO.update(patient);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        Patient patient = new Patient(
+                dto.getPatientId(),
+                dto.getFullName(),
+                dto.getEmail(),
+                dto.getPhoneNumber(),
+                dto.getMedicalHistory(),
+                null,
+                null
+        );
+
+        return patientDAO.update(patient);
     }
 
     @Override
     public boolean deletePatient(String id) {
-        try {
-            return patientDAO.delete(id);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        return patientDAO.delete(id);
     }
 
     @Override
@@ -109,14 +96,5 @@ public class PatientBOImpl implements PatientBO {
             return patientDTO;
         }
         return null;
-    }
-
-    @Override
-    public void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Operation Failed");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

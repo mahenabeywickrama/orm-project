@@ -18,48 +18,35 @@ public class TherapistBOImpl implements TherapistBO {
 
     @Override
     public boolean saveTherapist(TherapistDTO dto) {
-        try {
-            Therapist therapist = new Therapist(
-                    dto.getTherapistId(),
-                    dto.getName(),
-                    dto.getSpecialization(),
-                    dto.getContactNumber(),
-                    null,
-                    null
-            );
-            return therapistDAO.save(therapist);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        Therapist therapist = new Therapist(
+                dto.getTherapistId(),
+                dto.getName(),
+                dto.getSpecialization(),
+                dto.getContactNumber(),
+                null,
+                null
+        );
+
+        return therapistDAO.save(therapist);
     }
 
     @Override
     public boolean updateTherapist(TherapistDTO dto) {
-        try {
-            Therapist therapist = new Therapist(
-                    dto.getTherapistId(),
-                    dto.getName(),
-                    dto.getSpecialization(),
-                    dto.getContactNumber(),
-                    null,
-                    null
-            );
-            return therapistDAO.update(therapist);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        Therapist therapist = new Therapist(
+                dto.getTherapistId(),
+                dto.getName(),
+                dto.getSpecialization(),
+                dto.getContactNumber(),
+                null,
+                null
+        );
+
+        return therapistDAO.update(therapist);
     }
 
     @Override
     public boolean deleteTherapist(String id) {
-        try {
-            return therapistDAO.delete(id);
-        } catch (Exception e) {
-            showErrorAlert(e.getMessage());
-            return false;
-        }
+        return therapistDAO.delete(id);
     }
 
     @Override
@@ -107,14 +94,5 @@ public class TherapistBOImpl implements TherapistBO {
             return therapistDTO;
         }
         return null;
-    }
-
-    @Override
-    public void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Operation Failed");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

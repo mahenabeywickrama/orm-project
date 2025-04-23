@@ -12,5 +12,4 @@ public interface PatientBO extends SuperBO {
     String getNextPatientId();
     List<PatientDTO> getPatients();
     PatientDTO getPatientById(String id);
-    void showErrorAlert(String message);
 }
