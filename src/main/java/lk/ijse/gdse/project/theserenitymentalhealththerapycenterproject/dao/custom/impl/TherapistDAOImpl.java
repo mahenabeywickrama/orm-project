@@ -38,7 +38,12 @@ public class TherapistDAOImpl implements TherapistDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(entity);
+            Therapist therapist = session.get(Therapist.class, entity.getTherapistId());
+            therapist.setName(entity.getName());
+            therapist.setContactNumber(entity.getContactNumber());
+            therapist.setSpecialization(entity.getSpecialization());
+
+            session.merge(therapist);
             transaction.commit();
             return true;
         } catch (Exception e) {

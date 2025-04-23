@@ -38,7 +38,13 @@ public class PatientDAOImpl implements PatientDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(entity);
+            Patient patient = session.get(Patient.class, entity.getPatientId());
+            patient.setFullName(entity.getFullName());
+            patient.setEmail(entity.getEmail());
+            patient.setPhoneNumber(entity.getPhoneNumber());
+            patient.setMedicalHistory(entity.getMedicalHistory());
+
+            session.merge(patient);
             transaction.commit();
             return true;
         } catch (Exception e) {
