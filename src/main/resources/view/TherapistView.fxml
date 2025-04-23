@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="985.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller.PatientController">
+
+<AnchorPane prefHeight="720.0" prefWidth="985.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller.TherapistController">
    <children>
       <Pane layoutX="47.0" layoutY="41.0" prefHeight="639.0" prefWidth="891.0" style="-fx-background-color: white;">
          <children>
-            <Label alignment="CENTER" prefHeight="86.0" prefWidth="891.0" text="Patient">
+            <Label alignment="CENTER" prefHeight="86.0" prefWidth="891.0" text="Therapist">
                <font>
                   <Font name="Arial" size="52.0" />
                </font>
@@ -26,40 +27,34 @@
             <TextField fx:id="txtName" layoutX="137.0" layoutY="130.0" prefHeight="38.0" prefWidth="447.0">
                <font>
                   <Font name="Arial" size="18.0" />
-               </font></TextField>
+               </font>
+            </TextField>
             <Label layoutX="39.0" layoutY="130.0" prefHeight="38.0" prefWidth="98.0" text="Name :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtEmail" layoutX="137.0" layoutY="175.0" prefHeight="38.0" prefWidth="447.0">
+            <TextField fx:id="txtSpecialization" layoutX="189.0" layoutY="175.0" prefHeight="39.0" prefWidth="395.0">
                <font>
                   <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="39.0" layoutY="175.0" prefHeight="38.0" prefWidth="98.0" text="E-mail :">
+               </font>
+            </TextField>
+            <Label layoutX="39.0" layoutY="175.0" prefHeight="38.0" prefWidth="135.0" text="Specialization :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtPhone" layoutX="137.0" layoutY="219.0" prefHeight="38.0" prefWidth="447.0">
+            <TextField fx:id="txtContact" layoutX="137.0" layoutY="219.0" prefHeight="38.0" prefWidth="447.0">
                <font>
                   <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="39.0" layoutY="219.0" prefHeight="38.0" prefWidth="98.0" text="Phone :">
+               </font>
+            </TextField>
+            <Label layoutX="39.0" layoutY="219.0" prefHeight="38.0" prefWidth="98.0" text="Contact :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtMedical" layoutX="137.0" layoutY="263.0" prefHeight="38.0" prefWidth="447.0">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="39.0" layoutY="263.0" prefHeight="38.0" prefWidth="98.0" text="Medical :">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblId" layoutX="137.0" layoutY="87.0" prefHeight="38.0" prefWidth="98.0" text="P001">
+            <Label fx:id="lblId" layoutX="137.0" layoutY="87.0" prefHeight="38.0" prefWidth="98.0" text="T001">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -84,14 +79,13 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="tblPatient" layoutX="39.0" layoutY="328.0" onMouseClicked="#onClickTable" prefHeight="278.0" prefWidth="800.0">
-              <columns>
-                <TableColumn fx:id="colId" prefWidth="160.0" text="ID" />
-                <TableColumn fx:id="colName" prefWidth="160.0" text="Name" />
-                  <TableColumn fx:id="colEmail" prefWidth="160.0" text="Email" />
-                  <TableColumn fx:id="colPhone" prefWidth="160.0" text="Phone" />
-                  <TableColumn fx:id="colMedical" prefWidth="160.0" text="Medical History" />
-              </columns>
+            <TableView fx:id="tblTherapist" layoutX="39.0" layoutY="328.0" onMouseClicked="#onClickTable" prefHeight="278.0" prefWidth="800.0">
+               <columns>
+                  <TableColumn fx:id="colId" prefWidth="200.0" text="ID" />
+                  <TableColumn fx:id="colName" prefWidth="200.0" text="Name" />
+                  <TableColumn fx:id="colSpecialization" prefWidth="200.0" text="Specialization" />
+                  <TableColumn fx:id="colContact" prefWidth="200.0" text="Contact" />
+               </columns>
             </TableView>
          </children>
       </Pane>

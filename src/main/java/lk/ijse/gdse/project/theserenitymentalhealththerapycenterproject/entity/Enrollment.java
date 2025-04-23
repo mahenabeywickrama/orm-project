@@ -17,8 +17,9 @@ import java.util.List;
 public class Enrollment implements SuperEntity {
     @Id
     private String enrollmentId;
-
     private LocalDate enrollmentDate;
+    private String enrollmentStatus;
+    private double totalCost;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -32,7 +33,7 @@ public class Enrollment implements SuperEntity {
     )
     private List<TherapyProgram> therapyPrograms;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "paymentId")
+    @OneToOne
+    @JoinColumn(name = "payment_id", referencedColumnName = "paymentId", nullable = false)
     private Payment payment;
 }

@@ -2,20 +2,14 @@ package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.control
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.PatientTM;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class PatientController implements Initializable {
+public class TherapistController {
 
     @FXML
     private Button btnDelete;
@@ -30,42 +24,31 @@ public class PatientController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<PatientTM, String> colEmail;
+    private TableColumn<?, ?> colContact;
 
     @FXML
-    private TableColumn<PatientTM, String> colId;
+    private TableColumn<?, ?> colId;
 
     @FXML
-    private TableColumn<PatientTM, String> colMedical;
+    private TableColumn<?, ?> colName;
 
     @FXML
-    private TableColumn<PatientTM, String> colName;
-
-    @FXML
-    private TableColumn<PatientTM, String> colPhone;
+    private TableColumn<?, ?> colSpecialization;
 
     @FXML
     private Label lblId;
 
     @FXML
-    private TableView<PatientTM> tblPatient;
+    private TableView<?> tblTherapist;
 
     @FXML
-    private TextField txtEmail;
-
-    @FXML
-    private TextField txtMedical;
+    private TextField txtContact;
 
     @FXML
     private TextField txtName;
 
     @FXML
-    private TextField txtPhone;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    private TextField txtSpecialization;
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -91,4 +74,5 @@ public class PatientController implements Initializable {
     void onClickTable(MouseEvent event) {
 
     }
+
 }

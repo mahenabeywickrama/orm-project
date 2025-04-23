@@ -19,6 +19,7 @@ public class Payment implements SuperEntity {
 
     private LocalDate paymentDate;
     private double amount;
+    private double balance;
     private String method;
 
     @ManyToOne

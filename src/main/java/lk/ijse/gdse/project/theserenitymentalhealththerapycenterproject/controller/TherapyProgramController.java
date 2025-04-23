@@ -2,20 +2,15 @@ package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.control
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.PatientTM;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class PatientController implements Initializable {
+public class TherapyProgramController {
 
     @FXML
     private Button btnDelete;
@@ -30,42 +25,40 @@ public class PatientController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<PatientTM, String> colEmail;
+    private ComboBox<?> cmbTherapist;
 
     @FXML
-    private TableColumn<PatientTM, String> colId;
+    private TableColumn<?, ?> colDuration;
 
     @FXML
-    private TableColumn<PatientTM, String> colMedical;
+    private TableColumn<?, ?> colFee;
 
     @FXML
-    private TableColumn<PatientTM, String> colName;
+    private TableColumn<?, ?> colId;
 
     @FXML
-    private TableColumn<PatientTM, String> colPhone;
+    private TableColumn<?, ?> colName;
+
+    @FXML
+    private TableColumn<?, ?> colTherapist;
 
     @FXML
     private Label lblId;
 
     @FXML
-    private TableView<PatientTM> tblPatient;
+    private Label lblTherapistName;
 
     @FXML
-    private TextField txtEmail;
+    private TableView<?> tblProgram;
 
     @FXML
-    private TextField txtMedical;
+    private TextField txtDuration;
+
+    @FXML
+    private TextField txtFee;
 
     @FXML
     private TextField txtName;
-
-    @FXML
-    private TextField txtPhone;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -88,7 +81,13 @@ public class PatientController implements Initializable {
     }
 
     @FXML
+    void cmbTherapistOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
     void onClickTable(MouseEvent event) {
 
     }
+
 }
