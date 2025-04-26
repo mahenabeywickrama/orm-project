@@ -42,6 +42,7 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
             TherapyProgram therapyProgram = session.get(TherapyProgram.class, entity.getProgramId());
             therapyProgram.setProgramId(entity.getProgramId());
             therapyProgram.setName(entity.getName());
+            therapyProgram.setDurationInWeeks(entity.getDurationInWeeks());
             therapyProgram.setFee(entity.getFee());
             therapyProgram.setTherapist(entity.getTherapist());
 

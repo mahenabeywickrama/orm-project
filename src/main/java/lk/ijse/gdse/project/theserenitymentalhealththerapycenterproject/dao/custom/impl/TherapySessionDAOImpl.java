@@ -101,4 +101,16 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
                 .uniqueResult();
         return Optional.ofNullable(lastId);
     }
+
+    @Override
+    public List<TherapySession> findSessionsByTherapistId(String therapistId) {
+        Session session = factoryConfiguration.getSession();
+        List<TherapySession> sessions = session
+                .createQuery("FROM TherapySession s WHERE s.therapist.therapistId = :id", TherapySession.class)
+                .setParameter("id", therapistId)
+                .list();
+        session.close();
+        return sessions;
+    }
+
 }

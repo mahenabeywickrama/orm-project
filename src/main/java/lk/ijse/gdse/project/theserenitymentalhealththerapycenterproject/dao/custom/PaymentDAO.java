@@ -4,4 +4,5 @@ import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.Crud
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.Payment;
 
 public interface PaymentDAO extends CrudDAO<Payment, String> {
+    Payment getLastPayment();
 }

@@ -34,8 +34,6 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
                 null
         );
 
-        therapist.getPrograms().add(program);
-
         return therapyProgramDAO.save(program);
     }
 
@@ -69,7 +67,7 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
 
         if (lastId.isPresent()) {
             String lastID = lastId.get();
-            int numericPart = Integer.parseInt(lastID.substring(1));
+            int numericPart = Integer.parseInt(lastID.substring(2));
             numericPart++;
             return String.format("TP%03d", numericPart);
         } else {

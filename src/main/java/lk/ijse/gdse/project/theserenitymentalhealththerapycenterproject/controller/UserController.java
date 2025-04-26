@@ -10,16 +10,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.BOFactory;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.BOTypes;
-import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.custom.TherapistBO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.custom.UserBO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.TherapistDTO;
-import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.TherapistTM;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.TherapyProgramDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.UserDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.TherapyProgramTM;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.UserTM;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class TherapistController implements Initializable {
+public class UserController implements Initializable {
 
     @FXML
     private Button btnDelete;
@@ -34,38 +38,37 @@ public class TherapistController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<TherapistTM, String> colContact;
+    private ComboBox<String> cmbRole;
 
     @FXML
-    private TableColumn<TherapistTM, String> colId;
+    private TableColumn<UserTM, String> colId;
 
     @FXML
-    private TableColumn<TherapistTM, String> colName;
+    private TableColumn<UserTM, String> colPassword;
 
     @FXML
-    private TableColumn<TherapistTM, String> colSpecialization;
+    private TableColumn<UserTM, String> colRole;
+
+    @FXML
+    private TableColumn<UserTM, String> colUsername;
 
     @FXML
     private Label lblId;
 
     @FXML
-    private TableView<TherapistTM> tblTherapist;
+    private TableView<UserTM> tblUser;
 
     @FXML
-    private TextField txtContact;
+    private TextField txtPassword;
 
     @FXML
-    private TextField txtName;
+    private TextField txtUsername;
 
-    @FXML
-    private TextField txtSpecialization;
-
-    private TherapistBO therapistBO = BOFactory.getInstance().getBO(BOTypes.THERAPIST);
+    private UserBO userBO = BOFactory.getInstance().getBO(BOTypes.USER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCellValues();
-
         try {
             refreshPage();
         } catch (Exception e) {
@@ -74,51 +77,55 @@ public class TherapistController implements Initializable {
     }
 
     private void setCellValues() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
-        colContact.setCellValueFactory(new PropertyValueFactory<>("contactNumber"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
     }
 
     private void refreshPage() {
         loadTable();
         setNextId();
         clearFields();
+        loadCmb();
     }
 
     private void loadTable() {
         try {
-            List<TherapistDTO> therapists = therapistBO.getTherapists();
-            ObservableList<TherapistTM> therapistTMS = FXCollections.observableArrayList();
+            List<UserDTO> users = userBO.getUsers();
+            ObservableList<UserTM> userTMS = FXCollections.observableArrayList();
 
-            for (TherapistDTO therapistDTO : therapists) {
-                TherapistTM therapistTM = new TherapistTM(
-                        therapistDTO.getTherapistId(),
-                        therapistDTO.getName(),
-                        therapistDTO.getSpecialization(),
-                        therapistDTO.getContactNumber()
+            for (UserDTO userDTO : users) {
+                UserTM userTM = new UserTM(
+                        userDTO.getUserId(),
+                        userDTO.getUsername(),
+                        "********",
+                        userDTO.getRole()
                 );
-                therapistTMS.add(therapistTM);
+                userTMS.add(userTM);
             }
-            tblTherapist.setItems(therapistTMS);
+            tblUser.setItems(userTMS);
         } catch (Exception e) {
             showErrorAlert(e.getMessage());
         }
     }
 
     private void setNextId() {
-        String nextId = therapistBO.getNextTherapistId();
+        String nextId = userBO.getNextUserID();
         lblId.setText(nextId);
     }
 
     private void clearFields() {
-        txtContact.clear();
-        txtSpecialization.clear();
-        txtName.clear();
+        txtUsername.clear();
+        txtPassword.clear();
+
+        cmbRole.setValue(null);
 
         btnSave.setDisable(false);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
+
+        txtPassword.setDisable(false);
     }
 
     private boolean validateInputs() {
@@ -126,33 +133,42 @@ public class TherapistController implements Initializable {
 
         resetFieldStyles();
 
-        if (txtName.getText().isEmpty()) {
-            txtName.setStyle("-fx-border-color: red;");
+        if (txtUsername.getText().isEmpty()) {
+            txtUsername.setStyle("-fx-border-color: red;");
             isValid = false;
         }
 
-        if (txtContact.getText().isEmpty() ||
-                !txtContact.getText().matches("\\d{10,15}")) {
-            txtContact.setStyle("-fx-border-color: red;");
+        if (txtPassword.getText().isEmpty()) {
+            txtPassword.setStyle("-fx-border-color: red;");
             isValid = false;
         }
 
-        if (txtSpecialization.getText().isEmpty()) {
-            txtSpecialization.setStyle("-fx-border-color: red;");
+        if (cmbRole.getValue() == null) {
+            cmbRole.setStyle("-fx-border-color: red;");
             isValid = false;
         }
 
         if (!isValid) {
-            showErrorAlert("Please enter valid inputs.");
+            showErrorAlert("Please enter valid user details.");
         }
 
         return isValid;
     }
 
     private void resetFieldStyles() {
-        txtName.setStyle(null);
-        txtSpecialization.setStyle(null);
-        txtContact.setStyle(null);
+        txtUsername.setStyle(null);
+        txtPassword.setStyle(null);
+        cmbRole.setStyle(null);
+    }
+
+    private void loadCmb() {
+        List<String> roles = new ArrayList<>();
+        roles.add("ADMIN");
+        roles.add("RECEPTIONIST");
+        ObservableList<String> rolesCmb = FXCollections.observableArrayList();
+
+        rolesCmb.addAll(roles);
+        cmbRole.setItems(rolesCmb);
     }
 
     private void showSuccessAlert(String message) {
@@ -178,15 +194,15 @@ public class TherapistController implements Initializable {
         try {
             String id = lblId.getText();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this therapist?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this user?", ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> buttonType = alert.showAndWait();
             if (buttonType.get() == ButtonType.YES) {
-                boolean isDeleted = therapistBO.deleteTherapist(id);
+                boolean isDeleted = userBO.deleteUser(id);
                 if (isDeleted) {
-                    showSuccessAlert("Therapist deleted successfully.");
+                    showSuccessAlert("User deleted successfully.");
                     refreshPage();
                 } else {
-                    showErrorAlert("Failed to delete therapist.");
+                    showErrorAlert("Failed to delete user.");
                 }
             }
 
@@ -205,19 +221,19 @@ public class TherapistController implements Initializable {
         if (!validateInputs()) return;
 
         try {
-            TherapistDTO dto = new TherapistDTO(
+            UserDTO dto = new UserDTO(
                     lblId.getText(),
-                    txtName.getText(),
-                    txtSpecialization.getText(),
-                    txtContact.getText()
+                    txtUsername.getText(),
+                    txtPassword.getText(),
+                    cmbRole.getValue()
             );
 
-            boolean isSaved = therapistBO.saveTherapist(dto);
+            boolean isSaved = userBO.saveUser(dto);
             if (isSaved) {
-                showSuccessAlert("Therapist saved successfully.");
+                showSuccessAlert("User saved successfully.");
                 refreshPage();
             } else {
-                showErrorAlert("Failed to save therapist.");
+                showErrorAlert("Failed to save user.");
             }
 
         } catch (Exception e) {
@@ -230,19 +246,19 @@ public class TherapistController implements Initializable {
         if (!validateInputs()) return;
 
         try {
-            TherapistDTO dto = new TherapistDTO(
+            UserDTO dto = new UserDTO(
                     lblId.getText(),
-                    txtName.getText(),
-                    txtSpecialization.getText(),
-                    txtContact.getText()
+                    txtUsername.getText(),
+                    txtPassword.getText(),
+                    cmbRole.getValue()
             );
 
-            boolean isUpdated = therapistBO.updateTherapist(dto);
+            boolean isUpdated = userBO.updateUser(dto);
             if (isUpdated) {
-                showSuccessAlert("Therapist updated successfully.");
+                showSuccessAlert("Therapy program updated successfully.");
                 refreshPage();
             } else {
-                showErrorAlert("Failed to update therapist.");
+                showErrorAlert("Failed to update therapy program.");
             }
 
         } catch (Exception e) {
@@ -252,16 +268,18 @@ public class TherapistController implements Initializable {
 
     @FXML
     void onClickTable(MouseEvent event) {
-        TherapistTM selected = tblTherapist.getSelectionModel().getSelectedItem();
+        UserTM selected = tblUser.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            lblId.setText(selected.getTherapistId());
-            txtName.setText(selected.getName());
-            txtSpecialization.setText(selected.getSpecialization());
-            txtContact.setText(selected.getContactNumber());
+            lblId.setText(selected.getUserId());
+            txtUsername.setText(selected.getUsername());
+            txtPassword.setText(String.valueOf(selected.getPassword()));
+            cmbRole.setValue(selected.getRole());
 
             btnSave.setDisable(true);
             btnDelete.setDisable(false);
             btnUpdate.setDisable(false);
+
+            txtPassword.setDisable(true);
         }
     }
 }

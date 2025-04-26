@@ -39,7 +39,11 @@ public class UserDAOImpl implements UserDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(entity);
+            User user = session.get(User.class, entity.getUserId());
+            user.setUsername(entity.getUsername());
+            user.setPassword(entity.getPassword());
+            user.setRole(entity.getRole());
+            session.merge(user);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -59,7 +63,7 @@ public class UserDAOImpl implements UserDAO {
 
         try {
             User entity = session.get(User.class, s);
-            session.persist(entity);
+            session.remove(entity);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -101,4 +105,17 @@ public class UserDAOImpl implements UserDAO {
                 .uniqueResult();
         return Optional.ofNullable(lastId);
     }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Session session = factoryConfiguration.getSession();
+        try {
+            Query<User> query = session.createQuery("FROM User WHERE username = :username", User.class);
+            query.setParameter("username", username);
+            return query.uniqueResultOptional();
+        } finally {
+            session.close();
+        }
+    }
+
 }

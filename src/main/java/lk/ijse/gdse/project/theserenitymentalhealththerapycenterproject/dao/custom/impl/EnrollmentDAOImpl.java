@@ -3,6 +3,7 @@ package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.cus
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.config.FactoryConfiguration;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.custom.EnrollmentDAO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.Enrollment;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.TherapyProgram;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -38,7 +39,13 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(entity);
+            Enrollment enrollment = session.get(Enrollment.class, entity.getEnrollmentId());
+            enrollment.setEnrollmentDate(entity.getEnrollmentDate());
+            enrollment.setEnrollmentStatus(entity.getEnrollmentStatus());
+            enrollment.setPayment(entity.getPayment());
+            enrollment.setPatient(entity.getPatient());
+            enrollment.setTherapyPrograms(entity.getTherapyPrograms());
+            session.merge(enrollment);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -99,5 +106,22 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
                 .setMaxResults(1)
                 .uniqueResult();
         return Optional.ofNullable(lastId);
+    }
+
+    @Override
+    public List<TherapyProgram> getProgramsFromEnrollment(String enrollmentId) {
+        Session session = factoryConfiguration.getSession();
+        try {
+            return session.createQuery(
+                            "select p " +
+                                    "  from TherapyProgram p " +
+                                    "  join p.enrollments e " +
+                                    " where e.enrollmentId = :id",
+                            TherapyProgram.class)
+                    .setParameter("id", enrollmentId)
+                    .list();
+        } finally {
+            session.close();
+        }
     }
 }

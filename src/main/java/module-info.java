@@ -2,8 +2,9 @@ module lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
+    requires jbcrypt;
 //    requires com.jfoenix;
-//    requires net.sf.jasperreports.core;
+    requires net.sf.jasperreports.core;
 //    requires java.mail;
 
     requires org.hibernate.orm.core;

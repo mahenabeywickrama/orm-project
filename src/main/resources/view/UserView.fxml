@@ -10,11 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="985.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller.TherapyProgramController">
+
+<AnchorPane prefHeight="720.0" prefWidth="985.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller.UserController">
    <children>
       <Pane layoutX="47.0" layoutY="41.0" prefHeight="639.0" prefWidth="891.0" style="-fx-background-color: white;">
          <children>
-            <Label alignment="CENTER" prefHeight="86.0" prefWidth="891.0" text="Therapy Program">
+            <Label alignment="CENTER" prefHeight="86.0" prefWidth="891.0" text="User">
                <font>
                   <Font name="Arial" size="52.0" />
                </font>
@@ -24,42 +25,32 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtName" layoutX="137.0" layoutY="130.0" prefHeight="38.0" prefWidth="447.0">
+            <TextField fx:id="txtUsername" layoutX="148.0" layoutY="130.0" prefHeight="38.0" prefWidth="335.0">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="39.0" layoutY="130.0" prefHeight="38.0" prefWidth="98.0" text="Name :">
+            <Label layoutX="39.0" layoutY="130.0" prefHeight="38.0" prefWidth="98.0" text="Username :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtDuration" layoutX="230.0" layoutY="175.0" prefHeight="39.0" prefWidth="354.0">
+            <TextField fx:id="txtPassword" layoutX="148.0" layoutY="175.0" prefHeight="39.0" prefWidth="335.0">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="39.0" layoutY="175.0" prefHeight="38.0" prefWidth="173.0" text="Duration (Weeks) :">
+            <Label layoutX="39.0" layoutY="175.0" prefHeight="38.0" prefWidth="173.0" text="Password :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFee" layoutX="137.0" layoutY="219.0" prefHeight="38.0" prefWidth="447.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Label layoutX="39.0" layoutY="219.0" prefHeight="38.0" prefWidth="98.0" text="Fee (Rs) :">
+            <Label layoutX="39.0" layoutY="219.0" prefHeight="38.0" prefWidth="98.0" text="Role :">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="39.0" layoutY="263.0" prefHeight="38.0" prefWidth="98.0" text="Therapist :">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblId" layoutX="137.0" layoutY="87.0" prefHeight="38.0" prefWidth="98.0" text="TP001">
+            <Label fx:id="lblId" layoutX="148.0" layoutY="86.0" prefHeight="38.0" prefWidth="98.0" text="U001">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -84,26 +75,15 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="tblProgram" layoutX="39.0" layoutY="328.0" onMouseClicked="#onClickTable" prefHeight="278.0" prefWidth="800.0">
+            <TableView fx:id="tblUser" layoutX="39.0" layoutY="328.0" onMouseClicked="#onClickTable" prefHeight="278.0" prefWidth="800.0">
                <columns>
-                  <TableColumn fx:id="colId" prefWidth="160.0" text="ID" />
-                  <TableColumn fx:id="colName" prefWidth="160.0" text="Name" />
-                  <TableColumn fx:id="colDuration" prefWidth="160.0" text="Duration (Weeks)" />
-                  <TableColumn fx:id="colFee" prefWidth="160.0" text="Fee (Rs)" />
-                  <TableColumn fx:id="colTherapist" prefWidth="160.0" text="Therapist" />
+                  <TableColumn fx:id="colId" prefWidth="200.0" text="ID" />
+                  <TableColumn fx:id="colUsername" prefWidth="200.0" text="Username" />
+                  <TableColumn fx:id="colPassword" prefWidth="200.0" text="Password" />
+                  <TableColumn fx:id="colRole" prefWidth="200.0" text="Role" />
                </columns>
             </TableView>
-            <ComboBox fx:id="cmbTherapist" layoutX="137.0" layoutY="265.0" onAction="#cmbTherapistOnAction" prefHeight="38.0" prefWidth="150.0" />
-            <Label layoutX="303.0" layoutY="265.0" prefHeight="38.0" prefWidth="73.0" text="Name :">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblTherapistName" layoutX="376.0" layoutY="265.0" prefHeight="38.0" prefWidth="207.0">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Label>
+            <ComboBox fx:id="cmbRole" layoutX="148.0" layoutY="219.0" prefHeight="38.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>

@@ -12,13 +12,17 @@ public class FactoryConfiguration {
     private static FactoryConfiguration factoryConfiguration;
     private final SessionFactory sessionFactory;
 
-    private FactoryConfiguration() throws IOException {
+    private FactoryConfiguration() {
         Configuration configuration = new Configuration();
         Properties properties = new Properties();
 
-        properties.load(Thread.currentThread()
-                .getContextClassLoader()
-                .getResourceAsStream("hibernate.properties"));
+        try {
+            properties.load(Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResourceAsStream("hibernate.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         configuration.setProperties(properties);
 
@@ -34,11 +38,7 @@ public class FactoryConfiguration {
     }
 
     public static FactoryConfiguration getInstance() {
-        try {
-            return factoryConfiguration == null ? factoryConfiguration = new FactoryConfiguration() : factoryConfiguration;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return factoryConfiguration == null ? factoryConfiguration = new FactoryConfiguration() : factoryConfiguration;
     }
 
     public Session getSession() {

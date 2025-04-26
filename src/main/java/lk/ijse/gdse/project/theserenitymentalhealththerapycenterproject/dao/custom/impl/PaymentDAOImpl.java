@@ -100,4 +100,13 @@ public class PaymentDAOImpl implements PaymentDAO {
                 .uniqueResult();
         return Optional.ofNullable(lastId);
     }
+
+    public Payment getLastPayment() {
+        try (Session session = factoryConfiguration.getSession()) {
+            return session.createQuery("FROM Payment p ORDER BY p.paymentDate DESC", Payment.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
+    }
+
 }

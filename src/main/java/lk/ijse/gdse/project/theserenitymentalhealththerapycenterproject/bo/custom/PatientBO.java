@@ -2,6 +2,7 @@ package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.cust
 
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.SuperBO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.PatientDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.TherapyProgramDTO;
 
 import java.util.List;
 
@@ -12,4 +13,7 @@ public interface PatientBO extends SuperBO {
     String getNextPatientId();
     List<PatientDTO> getPatients();
     PatientDTO getPatientById(String id);
+    List<PatientDTO> getPatientsEnrolledInAllPrograms();
+    List<String> getPatientIdsEnrolledInAllPrograms();
+    List<TherapyProgramDTO> getProgramsForPatient(String patientId);
 }

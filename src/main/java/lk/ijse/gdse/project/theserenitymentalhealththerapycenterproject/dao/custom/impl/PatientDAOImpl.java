@@ -3,6 +3,7 @@ package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.cus
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.config.FactoryConfiguration;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.custom.PatientDAO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.Patient;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.TherapyProgram;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -106,4 +107,38 @@ public class PatientDAOImpl implements PatientDAO {
                 .uniqueResult();
         return Optional.ofNullable(lastId);
     }
+
+    @Override
+    public List<Patient> getPatientsEnrolledInAllPrograms() {
+        try (Session session = factoryConfiguration.getSession()) {
+            Long totalPrograms = session.createQuery("SELECT COUNT(tp.programId) FROM TherapyProgram tp", Long.class)
+                    .getSingleResult();
+
+            return session.createQuery(
+                            "SELECT p FROM Patient p " +
+                                    "JOIN p.enrollments e " +
+                                    "JOIN e.therapyPrograms tp " +
+                                    "GROUP BY p.patientId " +
+                                    "HAVING COUNT(DISTINCT tp.programId) = :programCount",
+                            Patient.class
+                    ).setParameter("programCount", totalPrograms)
+                    .getResultList();
+        }
+    }
+
+    @Override
+    public List<TherapyProgram> getProgramsByPatientId(String patientId) {
+        try (Session session = factoryConfiguration.getSession()) {
+            return session.createQuery(
+                            "SELECT tp " +
+                                    "FROM Enrollment e " +
+                                    "JOIN e.therapyPrograms tp " +
+                                    "WHERE e.patient.patientId = :pid",
+                            TherapyProgram.class)
+                    .setParameter("pid", patientId)
+                    .getResultList();
+        }
+    }
+
+
 }

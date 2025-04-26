@@ -1,12 +1,14 @@
 package lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.custom.impl;
 
-import javafx.scene.control.Alert;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.custom.PatientBO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.DAOFactory;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.DAOTypes;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dao.custom.PatientDAO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.PatientDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.PatientProgramDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.TherapyProgramDTO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.Patient;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.entity.TherapyProgram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,4 +99,50 @@ public class PatientBOImpl implements PatientBO {
         }
         return null;
     }
+
+    @Override
+    public List<PatientDTO> getPatientsEnrolledInAllPrograms() {
+        List<Patient> patients = patientDAO.getPatientsEnrolledInAllPrograms();
+        List<PatientDTO> patientDTOs = new ArrayList<>();
+
+        for (Patient patient : patients) {
+            PatientDTO dto = new PatientDTO();
+            dto.setPatientId(patient.getPatientId());
+            dto.setFullName(patient.getFullName());
+            dto.setEmail(patient.getEmail());
+            dto.setPhoneNumber(patient.getPhoneNumber());
+            dto.setMedicalHistory(patient.getMedicalHistory());
+            patientDTOs.add(dto);
+        }
+
+        return patientDTOs;
+    }
+
+    @Override
+    public List<String> getPatientIdsEnrolledInAllPrograms() {
+        List<Patient> patients = patientDAO.getPatientsEnrolledInAllPrograms();
+        List<String> ids = new ArrayList<>();
+
+        for (Patient p : patients) {
+            ids.add(p.getPatientId());
+        }
+        return ids;
+    }
+
+    @Override
+    public List<TherapyProgramDTO> getProgramsForPatient(String patientId) {
+        List<TherapyProgram> programs = patientDAO.getProgramsByPatientId(patientId);
+        List<TherapyProgramDTO> dtos = new ArrayList<>();
+        for (TherapyProgram p : programs) {
+            TherapyProgramDTO dto = new TherapyProgramDTO();
+            dto.setProgramId(p.getProgramId());
+            dto.setName(p.getName());
+            dto.setDurationInWeeks(p.getDurationInWeeks());
+            dto.setFee(p.getFee());
+            dto.setTherapistId(p.getTherapist().getTherapistId());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
 }

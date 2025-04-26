@@ -12,17 +12,23 @@ import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.BOFac
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.BOTypes;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.bo.custom.PatientBO;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.PatientDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.TherapyProgramDTO;
+import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.PatientProgramTM;
 import lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.dto.tm.PatientTM;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PatientController implements Initializable {
 
     @FXML
+    private Button btnAllPrograms;
+
+    @FXML
     private Button btnDelete;
+
+    @FXML
+    private Button btnPrograms;
 
     @FXML
     private Button btnReset;
@@ -49,10 +55,19 @@ public class PatientController implements Initializable {
     private TableColumn<PatientTM, String> colPhone;
 
     @FXML
+    private TableColumn<PatientProgramTM, String> colProgramId;
+
+    @FXML
+    private TableColumn<PatientProgramTM, String> colProgramName;
+
+    @FXML
     private Label lblId;
 
     @FXML
     private TableView<PatientTM> tblPatient;
+
+    @FXML
+    private TableView<PatientProgramTM> tblProgram;
 
     @FXML
     private TextField txtEmail;
@@ -85,12 +100,16 @@ public class PatientController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colMedical.setCellValueFactory(new PropertyValueFactory<>("medicalHistory"));
+
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        colProgramName.setCellValueFactory(new PropertyValueFactory<>("programName"));
     }
 
     private void refreshPage() {
         loadTable();
         setNextId();
         clearFields();
+        highlightFullyEnrolledPatients();
     }
 
     private void loadTable() {
@@ -124,6 +143,8 @@ public class PatientController implements Initializable {
         txtMedical.clear();
         txtName.clear();
         txtPhone.clear();
+
+        tblProgram.getItems().clear();
 
         btnSave.setDisable(false);
         btnDelete.setDisable(true);
@@ -185,6 +206,51 @@ public class PatientController implements Initializable {
         alert.setHeaderText("Operation Failed");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void highlightFullyEnrolledPatients() {
+        try {
+            List<String> fullyEnrolledPatientIds = patientBO.getPatientIdsEnrolledInAllPrograms();
+
+            tblPatient.setRowFactory(tableView -> createRow(fullyEnrolledPatientIds));
+        } catch (Exception e) {
+            showErrorAlert("Failed to highlight patients: " + e.getMessage());
+        }
+    }
+
+    private TableRow<PatientTM> createRow(List<String> fullyEnrolledPatientIds) {
+        TableRow<PatientTM> row = new TableRow<>();
+
+        row.itemProperty().addListener((obs, oldItem, newItem) -> {
+            if (newItem == null) {
+                row.setStyle("");
+            } else if (fullyEnrolledPatientIds.contains(newItem.getPatientId())) {
+                row.setStyle("-fx-background-color: #ccffcc;");
+            } else {
+                row.setStyle("");
+            }
+        });
+
+        return row;
+    }
+
+    private void loadProgramsForPatient(String patientId) {
+        try {
+
+            List<TherapyProgramDTO> programs = patientBO.getProgramsForPatient(patientId);
+
+            ObservableList<PatientProgramTM> items = FXCollections.observableArrayList();
+            for (TherapyProgramDTO dto : programs) {
+                items.add(new PatientProgramTM(
+                        dto.getProgramId(),
+                        dto.getName()
+                ));
+            }
+            tblProgram.setItems(items);
+
+        } catch (Exception e) {
+            showErrorAlert("Failed to load programs: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -277,6 +343,8 @@ public class PatientController implements Initializable {
             txtEmail.setText(selected.getEmail());
             txtPhone.setText(selected.getPhoneNumber());
             txtMedical.setText(selected.getMedicalHistory());
+
+            loadProgramsForPatient(selected.getPatientId());
 
             btnSave.setDisable(true);
             btnDelete.setDisable(false);

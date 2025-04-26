@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="contentPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.project.theserenitymentalhealththerapycenterproject.controller.LoginController">
+   <children>
+      <Pane prefHeight="720.0" prefWidth="640.0" style="-fx-background-color: black;">
+         <children>
+            <Label layoutX="120.0" layoutY="217.0" text="Welcome" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="96.0" />
+               </font>
+            </Label>
+            <Line endX="194.0" layoutX="320.0" layoutY="327.0" startX="-195.0" stroke="WHITE" />
+            <Label layoutX="243.0" layoutY="340.0" text="The Serenity" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="134.0" layoutY="380.0" text="Mental Health Therapy Center" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="640.0" prefHeight="720.0" prefWidth="640.0">
+         <children>
+            <Label layoutX="257.0" layoutY="173.0" text="Login">
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsername" layoutX="184.0" layoutY="292.0" promptText="Username">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtPassword" layoutX="183.0" layoutY="360.0" promptText="Password">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TextField>
+            <RadioButton fx:id="radioShow" layoutX="469.0" layoutY="371.0" mnemonicParsing="false" text="Show">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <Button fx:id="btnLogin" layoutX="253.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnLoginOnAction" prefHeight="39.0" prefWidth="134.0" style="-fx-background-color: black; -fx-background-radius: 20px;" text="Login" textFill="#e8e8e8">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="passwordField" layoutX="183.0" layoutY="360.0" prefHeight="46.0" prefWidth="273.0" promptText="Password">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </PasswordField>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
