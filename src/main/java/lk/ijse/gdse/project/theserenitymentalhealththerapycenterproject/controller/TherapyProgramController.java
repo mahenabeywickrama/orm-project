@@ -296,7 +296,7 @@ public class TherapyProgramController implements Initializable {
     void onClickTable(MouseEvent event) {
         TherapyProgramTM selected = tblProgram.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            lblId.setText(selected.getTherapistId());
+            lblId.setText(selected.getProgramId());
             txtName.setText(selected.getName());
             txtDuration.setText(String.valueOf(selected.getDurationInWeeks()));
             txtFee.setText(String.valueOf(selected.getFee()));

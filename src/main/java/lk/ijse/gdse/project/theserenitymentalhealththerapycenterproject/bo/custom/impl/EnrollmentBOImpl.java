@@ -113,6 +113,11 @@ public class EnrollmentBOImpl implements EnrollmentBO {
 
             enrollment.setTotalCost(dto.getTotalCost());
 
+            Payment payment = enrollment.getPayment();
+            payment.setMethod(dto.getMethod());
+            payment.setPaymentDate(dto.getEnrollmentDate());
+            payment.setPayedAmount(dto.getPayedAmount());
+
             session.merge(enrollment);
             tx.commit();
             return true;
@@ -260,6 +265,8 @@ public class EnrollmentBOImpl implements EnrollmentBO {
         dto.setEnrollmentStatus(e.getEnrollmentStatus());
         dto.setTotalCost(e.getTotalCost());
         dto.setPatientId(e.getPatient().getPatientId());
+        dto.setPayedAmount(e.getPayment().getPayedAmount());
+        dto.setMethod(e.getPayment().getMethod());
 
 //        List<String> programIds = new ArrayList<>();
 //        for (TherapyProgram program : e.getTherapyPrograms()) {

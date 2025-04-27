@@ -482,6 +482,8 @@ public class EnrollmentController implements Initializable {
             EnrollmentDTO enrollmentDTO = enrollmentBO.getEnrollment(selected.getEnrollmentId());
             if (enrollmentDTO != null) {
                 cmbPatient.setValue(enrollmentDTO.getPatientId());
+                cmbMethod.setValue(enrollmentDTO.getMethod());
+                txtAmount.setText(String.valueOf(enrollmentDTO.getPayedAmount()));
                 PatientDTO patientDTO = enrollmentBO.getPatient(enrollmentDTO.getPatientId());
                 if (patientDTO != null) {
                     lblPatientName.setText(patientDTO.getFullName());
